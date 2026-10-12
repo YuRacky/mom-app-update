@@ -1,0 +1,1 @@
+{"latest": "1.2.56", "patches": [{"from": "1.2.55", "to": "1.2.56", "parts": [{"file": "test/patch.zip", "size": 263, "sha256": "96044B390FB595E17613255408C130755196C1C8E52092F4DE2E12D9D71AA861"}], "delete": ["gone.txt"], "note": ["測試說明一", "測試說明二"]}]}
