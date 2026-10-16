@@ -83,6 +83,12 @@
     const iv = G.inv[idx];
     const m = kind !== 'attack' && G.phase === 'investigator' ? CE.monsterHere(idx) : null;
     if (!m) return true;
+    // 已經在問「要先躲避」了（例如連點兩下、朋友那邊重複點）：不要再開第二個
+    if (CE._evading) return false;
+    CE._evading = true;
+    try { return await evadeAsk(idx, kind, iv, m); } finally { CE._evading = false; }
+  };
+  const evadeAsk = async function (idx, kind, iv, m) {
     await CE.alert('要先躲避', `${iv.name} 和 ${T(m.name)} 在同一格（察覺 ${CE.monStat(m).aw}）。\n${kind === 'move' ? '要離開這一格' : '要做攻擊和移動以外的行動'}，必須先對它做躲避檢定。`, '開始躲避');
     await Engine.runMonsterTemplate(m, 'evade', 'MONSTER/EVADE/START');
     const ok = await CE.ask('躲避結果', `依剛才的結果，${iv.name} 這個行動還能繼續嗎？\n（如果訊息說「行動被取消／強制結束」，請選「被取消」，仍然會用掉 1 個行動）`, '可以繼續', '被取消');

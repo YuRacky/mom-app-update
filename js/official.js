@@ -105,7 +105,10 @@ UI.challenge = function (o) {
       const sk = ic2 ? SKILLS[ic2.charCodeAt(0) - 0xf200].k : 'obs';
       CE._lastRoll = null;
       n = await UI.diceDialog({ skill: sk, text: o.text, useResult: true });
-      OFF.layer.classList.remove('hidden'); upd();
+      OFF.layer.classList.remove('hidden');
+      // 擲骰時這個視窗被別的訊息換掉了（例如擲骰後自動跳出的狀態提示）：直接用擲骰結果，不要卡住
+      if (!L.querySelector('#chN')) { if (!L.children.length) L.classList.add('hidden'); Engine.log(`→ 成功數：${n}`); res(n); return; }
+      upd();
       if (CE._lastRoll) L.querySelector('#chOk').click();
     };
   });

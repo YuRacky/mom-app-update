@@ -328,15 +328,23 @@ const NET = {
     onMsg(m) {
       const G2 = NET.Guest;
       if (m.t === 'dom') {
+        // 畫面一次來很多張時（平板比較慢、網路卡一下）：只畫最新的一張，不要一張一張追，避免越落越後面
+        G2.pend = m;
+        if (!G2.pendT) G2.pendT = setTimeout(() => { G2.pendT = null; const mm = G2.pend; G2.pend = null; if (mm) G2.applyDom(mm); }, 0);
+      }
+      else if (m.t === 'file') NET.Files.got(m);
+      else if (m.t === 'tip') NET.Guest.showTip(m);
+      else if (m.t === 'ping') { }
+    },
+    applyDom(m) {
+      const G2 = NET.Guest;
+      {
         if (!G2.root) G2.setup();
         G2.hw = m.w; G2.hh = m.h; G2.root.style.setProperty('--u', m.u); G2.fit();
         if (m.css) NET.Files.checkCss(m.css);
         const tmp = document.createElement('div'); tmp.innerHTML = m.html;
         NET.patch(G2.root, tmp);
       }
-      else if (m.t === 'file') NET.Files.got(m);
-      else if (m.t === 'tip') NET.Guest.showTip(m);
-      else if (m.t === 'ping') { }
     },
     tip() {
       let t = document.getElementById('netTip'); if (t) return t;

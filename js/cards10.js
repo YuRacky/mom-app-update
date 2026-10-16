@@ -389,14 +389,14 @@
     return r;
   };
   // 和怪物同格時：骨笛不能交換、丟下、丟棄（物品視窗、交換視窗的按鈕）
-  const pipesItem = id => { const it = G.items.find(x => x.id === id); return it && it.id === PIPES && it.owner != null && stuck(it.owner) ? it : null; };
+  const pipesItem = id => { const it = (G.items || []).find(x => x.id === id); return it && it.id === PIPES && it.owner != null && stuck(it.owner) ? it : null; };
   const id6 = UI.itemDetail;
   UI.itemDetail = function (it) { CE._detailItem = it; return id6.apply(this, arguments); };
   const blockMsg = '持有骨笛：和怪物同一格時，不能交換、丟下或丟棄骨笛';
   window.addEventListener('click', e => {
     const b = e.target.closest && e.target.closest('[data-drop],[data-give],#itDrop');
     if (!b) return;
-    const it = b.id === 'itDrop' ? CE._detailItem : G.items.find(x => x.id === (b.dataset.drop || b.dataset.give));
+    const it = b.id === 'itDrop' ? CE._detailItem : (G.items || []).find(x => x.id === (b.dataset.drop || b.dataset.give));
     if (it && pipesItem(it.id)) { e.stopImmediatePropagation(); e.preventDefault(); UI.toast(blockMsg); }
   }, true);
   window.addEventListener('change', e => {
