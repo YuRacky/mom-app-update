@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>瘋狂詭宅 二版 · 數位桌遊</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="pwa/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="瘋狂詭宅">
+<script src="js/pwa.js"></script>
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/official.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/cards7.css">
+</head>
+<body>
+<div id="app">
+  <!-- 上方工具列 -->
+  <header id="topbar">
+    <button class="tb" id="btnMenu" title="選單"><img src="img/ui/Main-UI-Icon-Gear.png" alt=""><span>選單</span></button>
+    <div id="phaseBox"><div id="roundLabel">—</div><div id="phaseLabel">尚未開始</div></div>
+    <button class="tb" id="btnObjective" title="目前目標"><img src="img/ui/Main-UI-Icon-Book.png" alt=""><span>目標</span></button>
+    <button class="tb" id="btnLog" title="訊息紀錄"><img src="img/ui/Text-frame.png" alt=""><span>紀錄</span></button>
+    <div class="sep"></div>
+    <button class="tb" id="btnDice" title="擲骰"><img src="img/ui/ElderSign_256.png" alt=""><span>擲骰</span></button>
+    <button class="tb" id="btnItems" title="物品"><img src="img/ui/Main-UI-Icon-Backpack.png" alt=""><span>物品</span></button>
+    <button class="tb" id="btnMonsters" title="怪物"><img src="img/ui/Main-UI-Icon-Tenticles.png" alt=""><span>怪物</span></button>
+    <button class="tb" id="btnTokens" title="地圖標記"><img src="img/features/Feature_Darkness.png" alt=""><span>標記</span></button>
+    <div class="sep"></div>
+    <button class="tb" id="btnRecenter" title="重置視角"><span>⌖ 視角</span></button>
+    <div class="grow"></div>
+    <button id="btnEndPhase" class="endphase" disabled>結束調查員階段</button>
+  </header>
+
+  <div id="main">
+    <aside id="leftCol" class="col"></aside>
+    <section id="board">
+      <div id="world"></div>
+      <div id="monsterDock"></div>
+      <div id="toast"></div>
+    </section>
+    <aside id="rightCol" class="col"></aside>
+  </div>
+</div>
+
+<!-- 對話框層 -->
+<div id="overlay" class="hidden"><div id="dialog"></div></div>
+<div id="sheet" class="hidden"><div id="sheetInner"></div></div>
+<div id="banner" class="hidden"><img id="bannerImg" alt=""><div id="bannerText"></div></div>
+
+<script src="js/version.js"></script>
+<script src="data/strings.js"></script>
+<script src="data/unlock.js"></script>
+<script src="data/gamedb.js"></script>
+<script src="data/scen_01A.js"></script>
+<script src="data/scen_01B.js"></script>
+<script src="data/scen_02A.js"></script>
+<script src="data/scen_02B.js"></script>
+<script src="data/scen_AA_01A.js"></script>
+<script src="data/scen_AA_01B.js"></script>
+<script src="data/scen_AA_01C.js"></script>
+<script src="data/scen_AA_02A.js"></script>
+<script src="data/scen_AA_02B.js"></script>
+<script src="data/scen_AA_03A.js"></script>
+<script src="data/scen_AA_03B.js"></script>
+<script src="data/scen_GoA_01A.js"></script>
+<script src="data/scen_IFE_01A.js"></script>
+<script src="data/scen_IFE_02A.js"></script>
+<script src="data/scen_EFI_01A.js"></script>
+<script src="data/scen_EFI_02A.js"></script>
+<script src="data/scen_RT_01A.js"></script>
+<script src="data/scen_SB_01A.js"></script>
+<script src="data/scen_SB_01B.js"></script>
+<script src="data/scen_SB_03A.js"></script>
+<script src="data/scen_WLW_01A.js"></script>
+<script src="data/scen_WLW_02A.js"></script>
+<script src="data/scen_03A.js"></script>
+<script src="data/scen_04A.js"></script>
+<script src="data/scen_SB_02A.js"></script>
+<script src="data/scen_WLW_03A.js"></script>
+<script src="data/scen_WLW_04A.js"></script>
+<script src="data/scen_DD_01A.js"></script>
+<script src="data/scen_DD_01B.js"></script>
+<script src="data/scen_DD_02A.js"></script>
+<script src="data/scen_DD_03A.js"></script>
+<script src="data/scen_CoSH_01A.js"></script>
+<script src="data/scen_CoSH_01B.js"></script>
+<script src="data/scen_CoSH_02A.js"></script>
+<script src="data/scen_CoSH_03A.js"></script>
+<script src="data/investigators.js"></script>
+<script src="data/item_text.js"></script>
+<script src="data/cards.js"></script>
+<script src="data/tiles.js"></script>
+<script src="data/tiles_new.js"></script>
+<script src="data/tiles_new2.js"></script>
+<script src="data/mad25.js"></script>
+<script src="data/mad20.js"></script>
+<script src="data/mad2122.js"></script>
+<script src="data/mad23.js"></script>
+<script src="data/scen_GSM_01A.js"></script>
+<script src="data/scen_GSM_02A.js"></script>
+<script src="data/scen_VI_01A.js"></script>
+<script src="data/scen_VI_01B.js"></script>
+<script src="data/mad_var.js"></script>
+<script src="data/scen_WLW_05A.js"></script>
+<script src="data/scen_02C.js"></script>
+<script src="data/scen_06A.js"></script>
+<script src="data/scen_07A.js"></script>
+<script src="data/scen_08A.js"></script><script src="data/scen_05A.js"></script><script src="data/scen_WLW_06A.js"></script><script src="data/scen_TOAP_01A.js"></script><script src="data/scen_TOAP_02A.js"></script><script src="data/scen_TOAP_03A.js"></script><script src="data/scen_DR_01A.js"></script><script src="data/scen_DR_02A.js"></script><script src="data/scen_DR_03A.js"></script><script src="data/scen_OOT_01A.js"></script><script src="data/scen_OOT_02A.js"></script><script src="data/scen_OOT_03A.js"></script><script src="data/scen_OOT_04A.js"></script><script src="data/scen_MOAM_01A.js"></script><script src="data/scen_MOAM_01B.js"></script><script src="data/scen_MOAM_01C.js"></script><script src="data/scen_MOAM_01D.js"></script><script src="data/scen_MOAM_02A.js"></script><script src="data/scen_MOAM_02B.js"></script><script src="data/scen_MOAM_03A.js"></script><script src="data/scen_MOAM_04A.js"></script><script src="data/scen_MOAM_05A.js"></script><script src="data/scen_MOAM_07A.js"></script><script src="data/scen_MOAM_08A.js"></script>
+<script src="data/mad26.js"></script>
+<script src="data/scen_BCD_01A.js"></script>
+<script src="data/scen_TD_01A.js"></script>
+<script src="data/scen_TD_02A.js"></script>
+<script src="data/mad27.js"></script>
+<script src="data/scen_TA_01A.js"></script>
+<script src="data/scen_TA_02A.js"></script>
+<script src="data/scen_HD_01A.js"></script>
+<script src="data/scen_HD_02A.js"></script>
+<script src="data/scen_MSM_01A.js"></script>
+<script src="data/scen_MSM_02A.js"></script>
+<script src="data/scen_MSM_03A.js"></script>
+<script src="data/mad28.js"></script>
+<script src="data/maddlc.js"></script>
+<script src="data/scen_LST_01A.js"></script>
+<script src="data/scen_JA_01A.js"></script>
+<script src="data/scen_JA_02A.js"></script>
+<script src="data/scen_JA_03A.js"></script>
+<script src="data/scen_ITD_01A.js"></script>
+<script src="data/scen_ITD_01B.js"></script>
+<script src="data/scen_ITD_01C.js"></script>
+<script src="data/scen_ITD_02A.js"></script>
+<script src="data/scen_ITD_02B.js"></script>
+<script src="js/text.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/puzzles.js"></script>
+<script src="data/puzzles.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/official.js"></script>
+<script src="js/puzzles2.js"></script>
+<script src="js/cards.js"></script>
+<script src="js/cards2.js"></script>
+<script src="js/cards3.js"></script>
+<script src="js/map.js"></script>
+<script src="data/tilegrid.js"></script>
+<script src="data/tilegrid1e.js"></script>
+<script src="data/tilepoly.js"></script>
+<script src="data/tilepoly2.js"></script>
+<script src="data/tilepoly3.js"></script>
+<script src="data/tilepoly4.js"></script>
+<script src="js/map2.js"></script>
+<script src="js/cards4.js"></script>
+<script src="js/cards5.js"></script>
+<script src="js/peerjs.min.js"></script>
+<script src="js/net.js"></script>
+<script src="js/touch.js"></script>
+<script src="js/cards6.js"></script>
+<script src="js/cards7.js"></script>
+<script src="js/cards8.js"></script>
+<script src="js/cards9.js"></script>
+<script src="js/cards10.js"></script>
+<script src="js/cards11.js"></script>
+<script src="js/cards12.js"></script>
+<script src="js/custom_inv.js"></script>
+<script src="js/debug.js"></script>
+<script src="js/dev_on.js"></script>
+<script src="js/dev.js"></script>
+<script>
+window.addEventListener('load', function () {
+  var miss = [];
+  if (typeof DB === 'undefined') miss.push('data（遊戲資料）');
+  var im = new Image(); im.onerror = function () { show('img（圖片）'); }; im.src = 'img/ui/Text-frame.png';
+  function show(x) { if (x) miss.push(x); var d = document.getElementById('missBox'); if (!d) { d = document.createElement('div'); d.id = 'missBox'; d.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#000d;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1.8;text-align:center;padding:20px'; document.body.appendChild(d); }
+    d.innerHTML = '檔案不完整，缺少：' + miss.join('、') + '<br>請先解壓縮完整的「遠端APP的主檔.zip」，<br>再把「遠端APP的更新檔.zip」解壓縮覆蓋到同一個資料夾。'; }
+  if (miss.length) show();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+/* ===== 官方過場畫面 ===== */
+#cutscene { position: fixed; inset: 0; z-index: 9000; background: #050403 url(../img/misc/Main-UI-BackgroundTile.png); opacity: 0; transition: opacity .45s; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+#cutscene::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(0,0,0,.15) 0%, rgba(0,0,0,.75) 75%, rgba(0,0,0,.92) 100%); pointer-events: none; }
+#cutscene.on { opacity: 1; }
+#cutscene .csWrap { position: relative; display: flex; align-items: center; gap: 4.5vw; width: min(94vw, 1500px); height: 86vh; }
+#cutscene .csArt { flex: 0 0 auto; height: 78vh; aspect-ratio: 0.74; border: 22px solid transparent; border-image: url(../img/ui/Text-frame.png) 26 fill / 22px / 0 round; box-shadow: 0 0 40px rgba(0,0,0,.9); position: relative; }
+#cutscene .csWin { position: absolute; inset: 0; overflow: hidden; background: #000; }
+#cutscene .csWin img { position: absolute; top: 0; left: 0; height: 100%; width: auto; max-width: none; opacity: 0; transition: opacity 1.6s ease; transform: translateX(0); }
+#cutscene .csWin img.on { opacity: 1; animation: csPan var(--dur, 20s) linear forwards; }
+@keyframes csPan { from { transform: translateX(0) scale(1.04); } to { transform: translateX(var(--shift, 0px)) scale(1.04); } }
+#cutscene .csText { flex: 1; min-width: 0; height: 78vh; display: flex; flex-direction: column; align-items: center; }
+#cutscene .csOrn { width: 70%; max-width: 560px; height: auto; flex: 0 0 auto; filter: drop-shadow(0 0 4px rgba(0,0,0,.8)); }
+#cutscene .csOrn.bottom { margin-top: auto; transform: scaleY(-1); opacity: .8; }
+#cutscene .csParas { flex: 1; overflow: auto; padding: 2.4vh 1vw; width: 100%; box-sizing: border-box; scrollbar-width: none; }
+#cutscene .csParas p { color: #f2ede4; font-size: clamp(16px, 2.7vh, 28px); line-height: 1.65; margin: 0 0 1.5vh; text-shadow: 0 1px 3px #000, 0 0 10px rgba(0,0,0,.8); opacity: 0; transform: translateY(6px); transition: opacity 1.2s ease, transform 1.2s ease; text-align: left; }
+#cutscene .csParas p.on { opacity: 1; transform: none; }
+#cutscene .csCont { position: absolute; bottom: 2.2vh; right: 3vw; color: #a89a85; font-size: 14px; letter-spacing: .1em; }
+#cutscene .csCont.ready { color: #fff; font-size: 20px; padding: 8px 34px; border: 1px solid #b89a5e; background: rgba(40,30,18,.85); border-radius: 3px; animation: csPulse 1.6s ease-in-out infinite; }
+@keyframes csPulse { 50% { box-shadow: 0 0 14px rgba(230,190,110,.7); } }
+@media (max-aspect-ratio: 1/1) {
+  #cutscene .csWrap { flex-direction: column; height: 94vh; gap: 2vh; }
+  #cutscene .csArt { height: 40vh; }
+  #cutscene .csText { height: auto; flex: 1; width: 100%; }
+}
+
+/* ===== 手動加物品 ===== */
+#popup .addItemBtn { position: absolute; left: calc(var(--u) * 340); white-space: nowrap; font-size: calc(var(--u) * 16); color: #ffd36b; background: #000c; border: 1px solid #8a7348; border-radius: 12px; padding: 3px 10px; cursor: pointer; z-index: 4; }
+#popup .addItemBtn:hover { background: #2a2014; }
+
+/* ===== 怪物移動中 ===== */
+.fig.monster.moving { z-index: 50 !important; animation: monGlow 1s ease-in-out infinite; border-radius: 50%; }
+.mcard.moving { animation: monGlow 1s ease-in-out infinite; }
+@keyframes monGlow { 0%, 100% { box-shadow: 0 0 6px 2px rgba(255,80,60,.7); } 50% { box-shadow: 0 0 22px 9px rgba(255,120,60,1); } }
+#monMoveBar { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 8000; display: flex; align-items: center; gap: 14px; background: rgba(20,14,10,.94); border: 1px solid #b0623f; border-radius: 6px; padding: 10px 14px; box-shadow: 0 4px 20px rgba(0,0,0,.8); max-width: 92vw; }
+#monMoveBar .mmTxt { display: flex; align-items: center; gap: 10px; color: #f3e6d6; font-size: 15px; }
+#monMoveBar img { width: 44px; height: 44px; border-radius: 50%; }
+
+/* ===== 在某地的調查員 ===== */
+#popup .whoInBox { position: absolute; left: calc(var(--u) * -332); width: calc(var(--u) * 664); display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; font-size: calc(var(--u) * 17); color: #ffe7a8; z-index: 3; }
+#popup .whoInBox span { display: flex; align-items: center; gap: 5px; background: #000c; border: 1px solid #b89a5e; border-radius: 16px; padding: 2px 10px 2px 3px; color: #fff; }
+#popup .whoInBox img { width: calc(var(--u) * 28); height: calc(var(--u) * 28); border-radius: 50%; object-fit: cover; }
+
+/* ===== 謎題步數上限 ===== */
+.pzLimit { position: absolute; left: calc(var(--u) * -380); width: calc(var(--u) * 760); top: calc(var(--u) * -350); display: flex; align-items: center; justify-content: center; gap: 12px; font-size: calc(var(--u) * 18); color: #eee; background: #000d; border: 1px solid #8a7348; border-radius: 8px; padding: 6px 12px; box-sizing: border-box; z-index: 20; }
+.pzLimit img { width: calc(var(--u) * 34); height: calc(var(--u) * 34); border-radius: 50%; object-fit: cover; }
+.pzLimit b { color: #ffd36b; font-size: 1.2em; }
+.pzLimit b.zero { color: #ff7b6b; }
+.pzLimit .btn { font-size: calc(var(--u) * 16); padding: 4px 12px; }
+.pzLocked #tiles, .pzLocked #pcs, .pzLocked #pieces, .pzLocked #socks, .pzLocked #pzGuess { pointer-events: none; filter: grayscale(.7) brightness(.6); }
+
+/* ===== 連線（邀請碼） ===== */
+#netPanel .bigCode { font-size: 64px; letter-spacing: .25em; text-align: center; color: #ffd36b; font-family: Georgia, serif; margin: 8px 0 4px; text-shadow: 0 0 12px rgba(255,200,100,.4); }
+#netPanel .npIn { width: 100%; box-sizing: border-box; font-size: 20px; padding: 8px 10px; background: #0b0907; color: #fff; border: 1px solid #6a5a44; border-radius: 6px; font-family: inherit; }
+#netPanel .npIn.code { font-size: 34px; letter-spacing: .4em; text-align: center; }
+.joinAsk { position: fixed; right: 16px; top: 70px; z-index: 9500; width: min(360px, 90vw); background: #15110d; border: 2px solid #4f7fbf; border-radius: 10px; padding: 14px 16px; color: #eee; font-size: 16px; line-height: 1.6; box-shadow: 0 6px 30px rgba(0,0,0,.8); animation: popIn .2s ease-out; }
+.joinAsk b { color: #9cc4ff; }
+.joinAsk .btns { display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px; }
+#netBadge { pointer-events: none; }
+.joinAsk.fileAsk { top: auto; bottom: 40px; border-color: #8a7348; }
+
+/* 選項前面的「行動」圖示 */
+.actIco { font-family: "MADGaramond"; font-style: normal; margin-right: .35em; color: inherit; }
+
+/* ===== 屏障 ===== */
+#world .token.barBlock img { filter: drop-shadow(0 0 4px #ff4a3a) drop-shadow(0 0 2px #ff4a3a); }
+#world .token.barMovable { animation: monGlow 1s ease-in-out infinite; border-radius: 6px; }
+
+/* ===== 疊塔謎題 ===== */
+.towerPost { background: linear-gradient(90deg,#3a2614,#8a6038,#3a2614); border-radius: calc(var(--u)*6); cursor: pointer; }
+.towerBase { background: linear-gradient(#6b4524,#2e1c0c); border-radius: calc(var(--u)*4); cursor: pointer; box-shadow: 0 calc(var(--u)*3) calc(var(--u)*6) #000; }
+.towerPiece { cursor: pointer; background-repeat: no-repeat; box-shadow: 0 calc(var(--u)*2) calc(var(--u)*5) rgba(0,0,0,.8); transition: top .2s ease, left .25s ease; }
+.towerPiece.lift { outline: calc(var(--u)*3) solid #b7b15a; z-index: 3; }
+
+/* ===== 選劇本 ===== */
+.scenPick { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 4px 0 10px; }
+.scCard { width: 150px; background: #1a1410; border: 2px solid #4a3b2a; border-radius: 8px; padding: 6px; cursor: pointer; text-align: center; color: #ddd; }
+.scCard img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 4px; }
+.scCard .nm { font-size: 16px; color: #ffd36b; margin: 4px 0 2px; }
+.scCard.on { border-color: #e3b65a; box-shadow: 0 0 12px rgba(227,182,90,.6); }
+.scCard.off { opacity: .45; }
+.scCard .lockTxt { color: #ff9c7a; }
+
+/* ===== 強化、秘藥 ===== */
+.skill.imp { box-shadow: inset 0 0 0 2px #e3b65a; background: rgba(227,182,90,.15); }
+.skill.imp .sv::after { content: "▲"; color: #e3b65a; font-size: .7em; margin-left: 2px; }
+.chip.elix { cursor: pointer; border-color: #6fbf6f; }
+/* 我的收藏：盒子圖（仿官方 APP 的收藏畫面） */
+.prodGrid { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 10px; }
+.prodBox { width: 104px; background: #14100c; border: 2px solid #3a2e22; border-radius: 8px; padding: 4px; cursor: pointer; text-align: center; color: #888; opacity: .5; filter: grayscale(.85); transition: all .15s; }
+.prodBox img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 4px; display: block; }
+.prodBox .pbName { font-size: 13px; margin-top: 3px; line-height: 1.2; min-height: 2.4em; }
+.prodBox .pbMark { font-size: 12px; }
+.prodBox.on { opacity: 1; filter: none; border-color: #e3b65a; box-shadow: 0 0 10px rgba(227,182,90,.5); color: #ffd36b; }
+.prodBox.base { cursor: default; }
+/* 新遊戲：三個步驟 */
+.ngSteps { display: flex; gap: 6px; align-items: center; justify-content: center; margin: 2px 0 10px; font-size: 14px; color: #8a7d66; flex-wrap: wrap; }
+.ngSteps span { padding: 3px 10px; border: 1px solid #4a4030; border-radius: 12px; }
+.ngSteps span.on { color: #ffd36b; border-color: #e3b65a; box-shadow: 0 0 8px rgba(227,182,90,.4); }
+.ngSteps span.done { color: #b8a77f; }
+.ngSteps b { color: #6a5d48; }
+/* 快速提示框 */
+#qtip { position: fixed; z-index: 99999; display: none; max-width: 280px; background: #1d1810f0; color: #f1e6cc; border: 1px solid #c9a35a; border-radius: 6px; padding: 6px 9px; font-size: 13px; line-height: 1.45; pointer-events: none; white-space: pre-line; box-shadow: 0 3px 10px #000a; }
+/* 新遊戲：調查員能力說明 */
+.invInfo { display: flex; gap: 12px; align-items: flex-start; margin-top: 10px; padding: 10px 12px; border: 1px solid #5a4c34; border-radius: 8px; background: #1a150ecc; min-height: 86px; }
+.invInfo > img { width: 72px; height: 72px; border-radius: 50%; flex: none; }
+.invInfo .iiBody { flex: 1; font-size: 14px; line-height: 1.5; }
+.invInfo .iiStat { color: #d8c79f; }
+.invInfo .iiSk { display: flex; flex-wrap: wrap; gap: 4px 12px; color: #b8a77f; }
+.invInfo .iiSk b { color: #ffd36b; }
+.invInfo .iiAb { margin-top: 4px; color: #f1e6cc; }
+.pick .pkOwner { color: #7fd0ff; }
+.invInfo .iiStory { margin-top: 6px; font-size: 13px; color: #a89a7c; font-style: italic; line-height: 1.55; }
+/* 還沒建置的擴充：上鎖 */
+.prodBox.locked { position: relative; opacity: .45; cursor: not-allowed; filter: grayscale(1); }
+.prodBox.locked .pbLock { position: absolute; top: 28%; left: 50%; transform: translate(-50%, -50%); font-size: 34px; filter: drop-shadow(0 2px 3px #000); }
+.prodBox.locked .pbMark { color: #c98a6a; }
+/* 選調查員：滑鼠旁的說明框 */
+#invTip { position: fixed; z-index: 99999; display: none; width: 340px; margin: 0; pointer-events: none; background: #1a150e; box-shadow: 0 4px 14px #000c; }
+/* 重擲：提示先點骰子 */
+#dialog .die.pickMe:not(.lock) { animation: pickPulse 1s ease-in-out infinite; }
+@keyframes pickPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(240,200,90,0); } 50% { box-shadow: 0 0 0 4px rgba(240,200,90,.85); } }
+#dialog .opt.armed { outline: 2px solid #f0c85a; }
+/* 點選受影響的調查員 */
+#pickInvBar { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 8000; display: flex; align-items: center; gap: 12px; background: rgba(20,14,10,.95); border: 1px solid #c9a24a; border-radius: 6px; padding: 10px 14px; box-shadow: 0 4px 20px rgba(0,0,0,.8); max-width: 94vw; }
+#pickInvBar .mmTxt { color: #f3e6d6; font-size: 15px; max-width: 56vw; }
+#pickInvBar .pkCond { color: #f0c85a; font-size: 14px; }
+#world [data-inv].pickSel { box-shadow: 0 0 0 4px #f0c85a, 0 0 18px #f0c85a; border-radius: 50%; }
+.inv.pickable { cursor: pointer; }
+.inv.pickSel { outline: 3px solid #f0c85a; box-shadow: 0 0 16px rgba(240,200,90,.6); }
+.whoInBox .pkEdit { margin-left: 8px; padding: 1px 8px; border: 1px solid #c9a24a; border-radius: 4px; color: #f0c85a; cursor: pointer; font-size: 13px; }

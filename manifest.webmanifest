@@ -1,0 +1,15 @@
+{
+  "name": "瘋狂詭宅",
+  "short_name": "瘋狂詭宅",
+  "lang": "zh-Hant-TW",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#120e0b",
+  "theme_color": "#120e0b",
+  "icons": [
+    { "src": "pwa/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "pwa/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
